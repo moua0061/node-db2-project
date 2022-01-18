@@ -1,5 +1,6 @@
 // DO YOUR MAGIC
 const Car = require('./cars-model');
+const { checkCarId, checkCarPayload, checkVinNumberValid, checkVinNumberUnique } = require('./cars-middleware');
 const router = require('express').Router();
 
 router.get('/', (req, res, next) => {
@@ -9,15 +10,18 @@ router.get('/', (req, res, next) => {
         })
         .catch(next)
 })
-// router.get('/', () => {
-//     Car.get()
-//         .then()
-//         .catch()
-// })
-// router.get('/', () => {
-//     Car.get()
-//         .then()
-//         .catch()
-// })
+
+router.get('/:id', checkCarId, (req, res) => {
+    res.json(req.car)
+})
+
+
+router.post('/', (req, res, next) => {
+    Car.get(req.body)
+        .then(newCar => {
+            res.status(201).json(newCar)
+        })
+        .catch(next)
+})
 
 module.exports = router;

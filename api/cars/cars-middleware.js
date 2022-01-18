@@ -17,7 +17,13 @@ const checkCarId = (req, res, next) => {
 }
 
 const checkCarPayload = (req, res, next) => {
-  // DO YOUR MAGIC
+  const error = { status: 400 }
+  const { vin, make, model } = req.body
+  if(!vin || !make || !model) {
+    error.message = `${req.body} is missing`
+  } else {
+    next()
+  }
 }
 
 const checkVinNumberValid = (req, res, next) => {

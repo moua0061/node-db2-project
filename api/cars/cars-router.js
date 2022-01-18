@@ -16,14 +16,12 @@ router.get('/:id', checkCarId, (req, res) => {
 })
 
 
-router.post('/', (req, res, next) => {
-    // const { body } = req.body
-    // Car.get({body})
-    //     .then(newCar => {
-    //         res.status(201).json(newCar)
-    //     })
-        // .catch(next)
-        res.json('posting new car')
+router.post('/', checkCarPayload, checkVinNumberValid, checkVinNumberUnique, (req, res, next) => {
+    Car.create(req.body)
+        .then(newCar => {
+            res.json(newCar)
+        })
+        .catch(next)
 })
 
 module.exports = router;
